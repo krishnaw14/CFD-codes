@@ -76,8 +76,9 @@ x = 1 # Value whose derivative is to be evaluated
 dx_range = [] # Store the range of dx values. Used to plot the error values vs dx. 
 exact_value = Df(x) # Exact value used to compute error. 
 
-for i in range(10):
+for i in range(30):
 	dx = 1/(2**i) # Half the value of dx after every iteration
+	# print(dx)
 	dx_range.append(dx)
 	f1, f2, f3 = forward_difference(f, x, dx)
 	# print((f1-exact_value)/exact_value)
@@ -146,7 +147,7 @@ plt.plot(dx_range, backward_difference_error["3rd Order"])
 plt.plot(dx_range, central_difference_error["2nd Order"])
 plt.plot(dx_range, central_difference_error["4th Order"])
 plt.legend(["Forward-1st Order", "Forward-2nd Order", "Forward-3rd Order", "Backward-1st Order", 
-	"Backward-1st Order", "Backward-1st Order", "Backward-1st Order", "Backward-1st Order"])
+	"Backward-2nd Order", "Backward-3rd Order", "Central-2nd Order", "Central-4th Order"])
 plt.title("Forward vs Central vs Backward (Normal Scale)")
 plt.xlabel("dx")
 plt.ylabel("error")
@@ -205,7 +206,7 @@ plt.plot(np.log2(dx_range), np.log2(backward_difference_error["3rd Order"]))
 plt.plot(np.log2(dx_range), np.log2(central_difference_error["2nd Order"]))
 plt.plot(np.log2(dx_range), np.log2(central_difference_error["4th Order"]))
 plt.legend(["Forward-1st Order", "Forward-2nd Order", "Forward-3rd Order", "Backward-1st Order", 
-	"Backward-1st Order", "Backward-1st Order", "Backward-1st Order", "Backward-1st Order"])
+	"Backward-2nd Order", "Backward-3rd Order", "Central-2nd Order", "Central-4th Order"])
 plt.title("Forward vs Central vs Backward (Log Scale)")
 plt.xlabel("log(dx)")
 plt.ylabel("log(error)")
