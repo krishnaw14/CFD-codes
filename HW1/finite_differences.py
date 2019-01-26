@@ -52,7 +52,7 @@ def central_difference(f, x, dx):
 	return derivative_central_2, derivative_central_4
 
 
-saved_graphs_dir = "Graphs-Finite_Differnces/" # Folder to save the graphs
+saved_graphs_dir = "Graphs-Finite_Differences/" # Folder to save the graphs
 if not os.path.exists(saved_graphs_dir):
 	os.mkdir(saved_graphs_dir)
 

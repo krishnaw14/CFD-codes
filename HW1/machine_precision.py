@@ -41,7 +41,6 @@ if __name__ == '__main__':
 	parser.add_argument("-s", "--start_value", type = float, default = 1, help = "Starting Value of the iteration to find machine precision")
 
 	args = parser.parse_args()
-
 	if args.precision != "single" and args.precision != "double":
 		print("Invalid Precision")
 		sys.exit()
