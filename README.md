@@ -1,4 +1,4 @@
-# CFD-codes
+# CFD Assignments
 Assignments done as part of the course Computational Fluid Dynamics (AE 320)
 
 ## Assignment 1
