@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
+# To initialize boundary conditions and grid points
 def initialize_grid(N):
 	grid_points = np.linspace(0,1,N)
 	u_values = np.zeros(N)
@@ -10,7 +11,7 @@ def initialize_grid(N):
 
 	return grid_points, u_values, delta_x
 
-
+# Defining various numerical schemes
 def solve_FTFS(u_values, cfl, N):
 	new_values = np.array(u_values)
 	for i in range(1,N-1):
@@ -29,6 +30,9 @@ def solve_FTCS(u_values, cfl, N):
 		new_values[i] = u_values[i] - 0.5*cfl*(u_values[i+1] - u_values[i-1])
 	return new_values
 
+# Solve and plot the propagation of wave for a given condition of numerical sceme, intial and boundary conditions,
+# simulated time, CFL value.
+# This function will display each graph and save it in a directory
 def solve_and_plot(scheme_name, solve_scheme, grid_points, u_values, delta_x, simulated_time, cfl, N):
 	
 	num_iterations = int(simulated_time/(cfl*delta_x))
@@ -43,16 +47,31 @@ def solve_and_plot(scheme_name, solve_scheme, grid_points, u_values, delta_x, si
 	plt.ylabel("u(x,t)")
 	plt.axis([0,1,min(u_values)/1.2, max(u_values)*1.2])
 	plt.savefig(saved_graphs_directory + "Scheme = {} CFL value = {} (t = {}s).png".format(scheme_name, cfl, simulated_time))
-	plt.show()
+	plt.pause(1)
+	plt.clf()
 
+# Define the domain and range of values for which we need to obtain the solution
 N = 51
 grid_points, u_values, delta_x = initialize_grid(N)
 simulated_time_values = [0.2, 0.5, 0.7, 1]
 cfl_values = [0.4, 0.9, 1.2]
 
+# Define directory to save all the graphs
 saved_graphs_directory = "saved_graphs_question1/"
 if not os.path.exists(saved_graphs_directory):
 	os.mkdir(saved_graphs_directory)
+
+# Plot initial boundary conditions
+plt.plot(grid_points, u_values)
+plt.title("Initial Boundary Conditions")
+plt.xlabel("x")
+plt.ylabel("u(x,t)")
+plt.axis([0,1,min(u_values)/1.2, max(u_values)*1.2])
+plt.savefig(saved_graphs_directory + "InitialBC.png")
+plt.pause(1)
+plt.clf()
+
+# Solve for different schemes
 
 # Solve for FTCS
 scheme_name = "FTCS"
