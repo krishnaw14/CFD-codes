@@ -59,15 +59,15 @@ if __name__ == '__main__':
 	for max_num_iteration in max_num_iteration_values:
 		error_value1 = []
 		for w in w_range[1:-1]:
-			error_range = solve_SOR(grid_points1, w, 20)
+			error_range = solve_SOR(grid_points1, w, max_num_iteration)
 			error_value1.append(error_range[-1])
 
 		label = "Number of iterations = " + str(max_num_iteration)
 		plt.plot(w_range[1:-1], error_value1, label = label)
 
-plt.legend()
-plt.title("Error vs w for different grid size (number of iterations = 20)")
-plt.xlabel("w")
-plt.ylabel("Error after iteration")
+	plt.legend()
+	plt.title("Error vs w for different grid size (number of iterations = 20)")
+	plt.xlabel("w")
+	plt.ylabel("Error after iteration")
 
-plt.show()
+	plt.show()
