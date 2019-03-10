@@ -17,14 +17,13 @@ def solve_FTBS(u_values, cfl, N):
 	new_values = np.array(u_values)
 	for i in range(N):
 		new_values[i] = u_values[i] - cfl*(u_values[i] - u_values[i-1])
-	new_values[0] = new_values[-2]
-	new_values[-1] = new_values[1]
+	new_values[0] = new_values[-1]
 	return new_values
 
 def solve_FTCS2(u_values, cfl, N):
 	new_values = np.array(u_values)
 	for i in range(1,N-1):
-		new_values[i] = (1-cfl*cfl)*new_values[i] - 0.5*cfl*(1-cfl)*new_values[i+1] + 0.5*cfl*(1+cfl)*new_values[i-1]
+		new_values[i] = (1-cfl*cfl)*u_values[i] - 0.5*cfl*(1-cfl)*u_values[i+1] + 0.5*cfl*(1+cfl)*u_values[i-1]
 	new_values[0] = new_values[-2]
 	new_values[-1] = new_values[1]
 	return new_values
@@ -36,6 +35,7 @@ def solve_and_plot(scheme_name, solve_scheme, grid_points, u_values, delta_x, si
 	
 	num_iterations = int(simulated_time/(cfl*delta_x))
 	print("Number of iterations = ", num_iterations)
+	print("Saving the waveform at the end of simulated time")
 
 	for i in range(num_iterations):
 		u_values = np.array(solve_scheme(u_values, cfl, N))
@@ -47,7 +47,7 @@ def solve_and_plot(scheme_name, solve_scheme, grid_points, u_values, delta_x, si
 	# plt.axis([0,1,-1,1])
 	# plt.show()
 	plt.savefig(saved_graphs_directory + "Scheme = {} CFL value = {} (t = {}s).png".format(scheme_name, cfl, simulated_time))
-	plt.pause(0.1)
+	plt.pause(0.5)
 	plt.clf()
 
 
@@ -70,8 +70,8 @@ plt.xlabel("x")
 plt.ylabel("u(x,t)")
 # plt.axis([0,1,min(u_values)/1.2, max(u_values)*1.2])
 plt.savefig(saved_graphs_directory + "InitialBC.png")
-# plt.pause(1)
-plt.show()
+plt.pause(1)
+# plt.show()
 plt.clf()
 
 # # Solving for FTCS2 scheme
