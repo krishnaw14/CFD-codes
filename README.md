@@ -6,3 +6,6 @@ Finding Machine epsilon, matrix multiplication, taylor series and analysis of fi
 
 ## Assignment 2
 Solution of laplace heat equation using Jacobi, Gauss-Seidel and Jacobi iteration schemes.
+
+## Assignment 3
+Solution of wave equation using FTBS, FTFS, FTCS and FTCS2 schemes for different initial and boundary conditions
