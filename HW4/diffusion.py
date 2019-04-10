@@ -63,11 +63,11 @@ def solve_lax_friedrichs(u_values, N, dt, dx, dy, simulation_time):
 
 	for iteration in range(num_iterations):
 
-		f_r = 0.5*(u_values[2:,1:N+1] + u_values[1:N+1,1:N+1]) - 0.1*(u_values[2:,1:N+1] - u_values[1:N+1,1:N+1])/dx
-		f_l = 0.5*(u_values[1:N+1,1:N+1] + u_values[0:N,1:N+1]) - 0.1*(u_values[1:N+1,1:N+1] - u_values[0:N,1:N+1])/dx
+		f_r = -0.1*(u_values[2:,1:N+1] - u_values[1:N+1,1:N+1])/dx - 0.1*(u_values[2:,1:N+1] - u_values[1:N+1,1:N+1])/dx
+		f_l = -0.1*(u_values[1:N+1,1:N+1] - u_values[0:N,1:N+1])/dx - 0.1*(u_values[1:N+1,1:N+1] - u_values[0:N,1:N+1])/dx
 
-		g_r = 0.5*(u_values[1:N+1,2:] + u_values[1:N+1,1:N+1]) - 0.1*(u_values[1:N+1,2:] - u_values[1:N+1,1:N+1])/dy
-		g_l = 0.5*(u_values[1:N+1,1:N+1] + u_values[1:N+1,0:N]) - 0.1*(u_values[1:N+1,1:N+1] - u_values[1:N+1,0:N])/dy
+		g_r = -0.1*(u_values[1:N+1,2:] - u_values[1:N+1,1:N+1])/dy - 0.1*(u_values[1:N+1,2:] - u_values[1:N+1,1:N+1])/dy
+		g_l = -0.1*(u_values[1:N+1,1:N+1] - u_values[1:N+1,0:N])/dy - 0.1*(u_values[1:N+1,1:N+1] - u_values[1:N+1,0:N])/dy
 
 		new_u_values[1:N+1, 1:N+1] = u_values[1:N+1, 1:N+1] - (dt/dx)*(f_r-f_l) - (dt/dy)*(g_r-g_l)
 
