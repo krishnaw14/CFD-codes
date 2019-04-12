@@ -39,7 +39,7 @@ def add_ghost_cells(u_values, N):
 	return u_values
 
 
-def solve_lax_friedrichs(u_values, N, dt, dx, dy, simulation_time):
+def solve_iteration(u_values, N, dt, dx, dy, gamma, simulation_time):
 
 	num_iterations = int(simulation_time/dt)
 	print("Simulation Time = {}. Number of iterations = {}".format(simulation_time, num_iterations))
@@ -58,16 +58,20 @@ def solve_lax_friedrichs(u_values, N, dt, dx, dy, simulation_time):
 
 	surf = ax.plot_surface(X, Y, new_u_values[1:N+1, 1:N+1], cmap=cm.coolwarm,
                         linewidth=0, antialiased=False)
+
+	ax.set_xlabel('$X$', fontsize=20)
+	ax.set_ylabel('$Y$', fontsize=20)
+	ax.set_zlabel('$U$', fontsize=20)
 	plt.draw()
 	plt.pause(0.5)
 
 	for iteration in range(num_iterations):
 
-		f_r = -0.1*(u_values[2:,1:N+1] - u_values[1:N+1,1:N+1])/dx - 0.1*(u_values[2:,1:N+1] - u_values[1:N+1,1:N+1])/dx
-		f_l = -0.1*(u_values[1:N+1,1:N+1] - u_values[0:N,1:N+1])/dx - 0.1*(u_values[1:N+1,1:N+1] - u_values[0:N,1:N+1])/dx
+		f_r = -gamma*(u_values[2:,1:N+1] - u_values[1:N+1,1:N+1])/dx - gamma*(u_values[2:,1:N+1] - u_values[1:N+1,1:N+1])/dx
+		f_l = -gamma*(u_values[1:N+1,1:N+1] - u_values[0:N,1:N+1])/dx - gamma*(u_values[1:N+1,1:N+1] - u_values[0:N,1:N+1])/dx
 
-		g_r = -0.1*(u_values[1:N+1,2:] - u_values[1:N+1,1:N+1])/dy - 0.1*(u_values[1:N+1,2:] - u_values[1:N+1,1:N+1])/dy
-		g_l = -0.1*(u_values[1:N+1,1:N+1] - u_values[1:N+1,0:N])/dy - 0.1*(u_values[1:N+1,1:N+1] - u_values[1:N+1,0:N])/dy
+		g_r = -gamma*(u_values[1:N+1,2:] - u_values[1:N+1,1:N+1])/dy - gamma*(u_values[1:N+1,2:] - u_values[1:N+1,1:N+1])/dy
+		g_l = -gamma*(u_values[1:N+1,1:N+1] - u_values[1:N+1,0:N])/dy - gamma*(u_values[1:N+1,1:N+1] - u_values[1:N+1,0:N])/dy
 
 		new_u_values[1:N+1, 1:N+1] = u_values[1:N+1, 1:N+1] - (dt/dx)*(f_r-f_l) - (dt/dy)*(g_r-g_l)
 
@@ -82,22 +86,44 @@ def solve_lax_friedrichs(u_values, N, dt, dx, dy, simulation_time):
 	surf.remove()
 	surf = ax.plot_surface(X, Y, new_u_values[1:N+1, 1:N+1], cmap=cm.coolwarm,
                        linewidth=0, antialiased=False)
+	ax.set_title("3D Plot after t = {}s: ".format(simulation_time))
+	plt.savefig(saved_plots_dir + "diffusiont_{}.png".format(simulation_time))
 
 	plt.draw()
-	plt.show()
+	plt.pause(1)
 	surf.remove()
+
+	return u_values
 
 
 N = 101
 A = 2
-dt = 0.01
+dt = 0.001
 dx = 20/(N-1)
 dy = 20/(N-1)
+gamma = 0.1
 
-time_values = [10,20,30,40]
+time_values = [0,2.5,5,7.5,10,12.5,15,17.5,20,22.5,25]
 initial_u_values = initialize_grid(N,A)
 initial_u_values = add_ghost_cells(initial_u_values, N)
-# print(np.linspace(0,20,N)[25])
+
+saved_plots_dir = "diffusion_plots/"
+if not os.path.exists(saved_plots_dir):
+	os.mkdir(saved_plots_dir)
 
 for time in time_values:
-	solve_lax_friedrichs(initial_u_values, N, dt, dx, dy, time)
+	u_values = np.array(solve_iteration(initial_u_values, N, dt, dx, dy, gamma, time))
+	fig_2d = plt.figure()
+	plt.plot(np.linspace(0,20,N), u_values.diagonal()[1:-1])
+	plt.xlabel("x")
+	plt.ylabel("U")
+	plt.title("Diagonal Plot t = {}s".format(time))
+	plt.axis([0,20,0,2])
+	plt.savefig(saved_plots_dir+"diagonal_{}_t_{}.png".format("FTBS", time))
+	plt.close()
+
+print("Diagonal Plots have been saved!")
+
+
+
+
