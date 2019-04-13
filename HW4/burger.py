@@ -102,7 +102,7 @@ def solve_iteration(u_values, N, dt, dx, dy, nu, Lambda, simulation_time, scheme
 		linewidth = 0, antialiased=False)
 	ax.set_title("3D Plot after t = {}s: Scheme: {}, ν: {}\n".format(simulation_time, scheme_name, nu))
 	plt.draw()
-	plt.savefig(saved_plots_dir+"burger_{}_t_{}.png".format(scheme_name, simulation_time))
+	plt.savefig(saved_plots_dir+"burger_{}_t_{}_nu_{}.png".format(scheme_name, simulation_time, nu))
 	plt.pause(2)
 	surf.remove()
 	print("Plot saved!")
@@ -137,7 +137,15 @@ for time in time_values:
 		plt.xlabel("x")
 		plt.ylabel("U")
 		plt.title("Diagonal Plot t = {}s".format(time))
-		plt.savefig(saved_plots_dir+"burger_diagonal_{}_t_{}.png".format("FTBS", time))
+		plt.savefig(saved_plots_dir+"burger_diagonal_{}_t_{}_nu_{}.png".format("FTBS", time, nu))
+		plt.close()
+
+		fig_2d = plt.figure()
+		plt.plot(np.linspace(0,15,N), np.diag(np.fliplr(u_values))[1:-1])
+		plt.xlabel("x")
+		plt.ylabel("U")
+		plt.title("Diagonal Plot t = {}s".format(time))
+		plt.savefig(saved_plots_dir+"burger_other_diagonal_{}_t_{}_nu_{}.png".format("FTBS", time, nu))
 		plt.close()
 
 print("Diagonal Plots have been generated!\n\n")
@@ -153,7 +161,15 @@ for time in time_values:
 		plt.xlabel("x")
 		plt.ylabel("U")
 		plt.title("Diagonal Plot t = {}s".format(time))
-		plt.savefig(saved_plots_dir+"burger_diagonal_{}_t_{}.png".format("Lax-Friedrich", time))
+		plt.savefig(saved_plots_dir+"burger_diagonal_{}_t_{}_nu_{}.png".format("Lax-Friedrich", time, nu))
+		plt.close()
+
+		fig_2d = plt.figure()
+		plt.plot(np.linspace(0,15,N), np.diag(np.fliplr(u_values))[1:-1])
+		plt.xlabel("x")
+		plt.ylabel("U")
+		plt.title("Diagonal Plot t = {}s".format(time))
+		plt.savefig(saved_plots_dir+"burger_other_diagonal_{}_t_{}_nu_{}.png".format("Lax-Friedrich", time, nu))
 		plt.close()
 
 print("Diagonal Plots have been generated!\n\n")
@@ -169,8 +185,18 @@ for time in time_values:
 		plt.xlabel("x")
 		plt.ylabel("U")
 		plt.title("Diagonal Plot t = {}s".format(time))
-		plt.savefig(saved_plots_dir+"burger_diagonal_{}_t_{}.png".format("FTCS2", time))
+		plt.savefig(saved_plots_dir+"burger_diagonal_{}_t_{}_nu_{}.png".format("FTCS2", time, nu))
 		plt.close()
+
+		fig_2d = plt.figure()
+		plt.plot(np.linspace(0,15,N), np.diag(np.fliplr(u_values))[1:-1])
+		plt.xlabel("x")
+		plt.ylabel("U")
+		plt.title("Diagonal Plot t = {}s".format(time))
+		plt.savefig(saved_plots_dir+"burger_other_diagonal_{}_t_{}_nu_{}.png".format("FTCS2", time, nu))
+		plt.close()
+
+
 
 print("Diagonal Plots have been generated!")
 
