@@ -7,6 +7,7 @@ from matplotlib import cm
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
 import matplotlib
 
+# Initialize the grid points as per given in question
 def initialize_grid(N, A):
 	u_values = np.zeros((N,N))
 
@@ -23,6 +24,7 @@ def initialize_grid(N, A):
 
 	return u_values
 
+# Add ghost cells to the grid. Implement zero gradient boundary condition.
 def add_ghost_cells(u_values, N):
 	first_ghost_cell_row = u_values[0]
 	last_ghost_cell_row = u_values[-1]
@@ -38,7 +40,7 @@ def add_ghost_cells(u_values, N):
 
 	return u_values
 
-
+# Solve for u values via finite volume numerical iteration form
 def solve_iteration(u_values, N, dt, dx, dy, gamma, simulation_time):
 
 	num_iterations = int(simulation_time/dt)
@@ -83,16 +85,26 @@ def solve_iteration(u_values, N, dt, dx, dy, gamma, simulation_time):
 
 		u_values = np.array(new_u_values)
 
-		# if iteration%500 == 0:
+		# Change grid after every num_iteration/10 iterations
+		if iteration%(num_iterations/10) == 0:
+			surf.remove()
+			surf = ax.plot_surface(X,Y, u_values[1:N+1, 1:N+1], cmap = cm.coolwarm, 
+				linewidth = 0, antialiased = False)
+			ax.set_title("Simulating for t = {}s...\n".format(simulation_time), fontsize="15", y=1.08)
+			plt.draw()
+			plt.pause(0.1)
+
+	# Display and Save the final grid
 	surf.remove()
 	surf = ax.plot_surface(X, Y, new_u_values[1:N+1, 1:N+1], cmap=cm.coolwarm,
                        linewidth=0, antialiased=False)
 	ax.set_title("3D Plot after t = {}s: ".format(simulation_time))
-	# plt.savefig(saved_plots_dir + "diffusiont_{}.png".format(simulation_time))
+	plt.savefig(saved_plots_dir + "diffusiont_{}.png".format(simulation_time))
 
 	plt.draw()
-	plt.pause(0.5)
-		# surf.remove()
+	plt.pause(1.5)
+	surf.remove()
+	plt.close()
 
 	return u_values
 
@@ -104,7 +116,7 @@ dx = 20/(N-1)
 dy = 20/(N-1)
 gamma = 0.1
 
-time_values = [10,20,30,40]
+time_values = [0,10,20,30,40]
 initial_u_values = initialize_grid(N,A)
 initial_u_values = add_ghost_cells(initial_u_values, N)
 

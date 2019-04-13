@@ -100,9 +100,10 @@ def solve_iteration(u_values, N, dt, dx, dy, nu, Lambda, simulation_time, scheme
 	plt.tight_layout() 
 	surf = ax.plot_surface(X, Y, u_values[1:N+1, 1:N+1], cmap = cm.coolwarm, 
 		linewidth = 0, antialiased=False)
-	ax.set_title("3D Plot after t = {}s: Scheme: {}, ν: {}\n".format(simulation_time, scheme_name, nu), fontsize="15", y=1.08)
+	ax.set_title("3D Plot after t = {}s: Scheme: {}, ν: {}\n".format(simulation_time, scheme_name, nu))
 	plt.draw()
 	plt.savefig(saved_plots_dir+"burger_{}_t_{}.png".format(scheme_name, simulation_time))
+	plt.pause(2)
 	surf.remove()
 	print("Plot saved!")
 	plt.close()

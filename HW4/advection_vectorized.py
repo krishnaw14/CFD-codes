@@ -81,6 +81,15 @@ def solve_iteration(u_values, N, dt, dx, dy, simulation_time, Lambda, scheme_nam
 
 		u_values = np.array(new_u_values)
 
+		# Change grid after every num_iteration/10 iterations
+		if iteration%(num_iterations/10) == 0:
+			surf.remove()
+			surf = ax.plot_surface(X,Y, u_values[1:N+1, 1:N+1], cmap = cm.coolwarm, 
+				linewidth = 0, antialiased = False)
+			ax.set_title("Simulating for t = {}s: Scheme: {}...".format(simulation_time, scheme_name), fontsize="15", y=1.08)
+			plt.draw()
+			plt.pause(0.1)
+
 	surf.remove()
 	surf = ax.plot_surface(X, Y, new_u_values[1:N+1, 1:N+1], cmap=cm.coolwarm,
                        linewidth=0, antialiased=False)
@@ -88,7 +97,7 @@ def solve_iteration(u_values, N, dt, dx, dy, simulation_time, Lambda, scheme_nam
 	ax.set_title("3D Plot after t = {}s: Scheme: {}".format(simulation_time, scheme_name))
 	plt.draw()
 	plt.savefig(saved_plots_dir + "{}_advectiont_{}.png".format(scheme_name, simulation_time))
-	plt.pause(1)
+	plt.pause(2)
 	surf.remove()
 	return u_values
 
@@ -99,7 +108,7 @@ dt = 0.001
 dx = 20/(N-1)
 dy = 20/(N-1)
 
-time_values = [0,1,3,5,7.5,10,12,15]
+time_values = [0,5,10,15]
 initial_u_values = initialize_grid(N,A)
 initial_u_values = add_ghost_cells(initial_u_values, N)
 saved_plots_dir = "advection_plots/"
