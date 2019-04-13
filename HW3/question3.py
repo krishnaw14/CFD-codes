@@ -53,9 +53,9 @@ def solve_and_plot(scheme_name, solve_scheme, grid_points, u_values, delta_x, si
 	plt.clf()
 
 
-N_values = [41, 601]
+N_values = [40, 600]
 cfl = 0.8
-simulated_time_values = [4, 40]
+simulated_time_values = [4]
 
 # Visualize domain and initial and boundary conditions
 

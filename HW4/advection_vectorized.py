@@ -65,11 +65,11 @@ def solve_iteration(u_values, N, dt, dx, dy, simulation_time, Lambda, scheme_nam
 
 	for iteration in range(num_iterations):
 
-		f_r = np.array(0.5*(u_values[2:,1:N+1] + u_values[1:N+1,1:N+1]) - 0.5*Lambda*(u_values[2:,1:N+1] - u_values[1:N+1,1:N+1]))
-		f_l = np.array(0.5*(u_values[1:N+1,1:N+1] + u_values[0:N,1:N+1]) - 0.5*Lambda*(u_values[1:N+1,1:N+1] - u_values[0:N,1:N+1]))
+		f_r = 0.5*(u_values[2:,1:N+1] + u_values[1:N+1,1:N+1]) - 0.5*Lambda*(u_values[2:,1:N+1] - u_values[1:N+1,1:N+1])
+		f_l = 0.5*(u_values[1:N+1,1:N+1] + u_values[0:N,1:N+1]) - 0.5*Lambda*(u_values[1:N+1,1:N+1] - u_values[0:N,1:N+1])
 
-		g_r = np.array(0.5*(u_values[1:N+1,2:] + u_values[1:N+1,1:N+1]) - 0.5*Lambda*(u_values[1:N+1,2:] - u_values[1:N+1,1:N+1]))
-		g_l = np.array(0.5*(u_values[1:N+1,1:N+1] + u_values[1:N+1,0:N]) - 0.5*Lambda*(u_values[1:N+1,1:N+1] - u_values[1:N+1,0:N]))
+		g_r = 0.5*(u_values[1:N+1,2:] + u_values[1:N+1,1:N+1]) - 0.5*Lambda*(u_values[1:N+1,2:] - u_values[1:N+1,1:N+1])
+		g_l = 0.5*(u_values[1:N+1,1:N+1] + u_values[1:N+1,0:N]) - 0.5*Lambda*(u_values[1:N+1,1:N+1] - u_values[1:N+1,0:N])
 
 		new_u_values[1:N+1, 1:N+1] = np.array(u_values[1:N+1, 1:N+1] - (dt/dx)*(f_r-f_l) - (dt/dy)*(g_r-g_l))
 

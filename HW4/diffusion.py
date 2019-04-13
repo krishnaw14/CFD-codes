@@ -67,43 +67,44 @@ def solve_iteration(u_values, N, dt, dx, dy, gamma, simulation_time):
 
 	for iteration in range(num_iterations):
 
-		f_r = -gamma*(u_values[2:,1:N+1] - u_values[1:N+1,1:N+1])/dx - gamma*(u_values[2:,1:N+1] - u_values[1:N+1,1:N+1])/dx
-		f_l = -gamma*(u_values[1:N+1,1:N+1] - u_values[0:N,1:N+1])/dx - gamma*(u_values[1:N+1,1:N+1] - u_values[0:N,1:N+1])/dx
+		f_r = - gamma*(u_values[2:,1:N+1] - u_values[1:N+1,1:N+1])/dx
+		f_l = - gamma*(u_values[1:N+1,1:N+1] - u_values[0:N,1:N+1])/dx
 
-		g_r = -gamma*(u_values[1:N+1,2:] - u_values[1:N+1,1:N+1])/dy - gamma*(u_values[1:N+1,2:] - u_values[1:N+1,1:N+1])/dy
-		g_l = -gamma*(u_values[1:N+1,1:N+1] - u_values[1:N+1,0:N])/dy - gamma*(u_values[1:N+1,1:N+1] - u_values[1:N+1,0:N])/dy
+		g_r = - gamma*(u_values[1:N+1,2:] - u_values[1:N+1,1:N+1])/dy
+		g_l = - gamma*(u_values[1:N+1,1:N+1] - u_values[1:N+1,0:N])/dy
 
-		new_u_values[1:N+1, 1:N+1] = u_values[1:N+1, 1:N+1] - (dt/dx)*(f_r-f_l) - (dt/dy)*(g_r-g_l)
+		new_u_values[1:N+1, 1:N+1] = np.array(u_values[1:N+1, 1:N+1] - (dt/dx)*(f_r-f_l) - (dt/dy)*(g_r-g_l))
 
-		new_u_values[0] = new_u_values[1]
-		new_u_values[N+1] = new_u_values[N]
+		new_u_values[0] = np.array(new_u_values[1])
+		new_u_values[N+1] = np.array(new_u_values[N])
 
-		new_u_values[:,0] = new_u_values[:, 1]
-		new_u_values[:,N+1] = new_u_values[:, N]
+		new_u_values[:,0] = np.array(new_u_values[:, 1])
+		new_u_values[:,N+1] = np.array(new_u_values[:, N])
 
 		u_values = np.array(new_u_values)
 
+		# if iteration%500 == 0:
 	surf.remove()
 	surf = ax.plot_surface(X, Y, new_u_values[1:N+1, 1:N+1], cmap=cm.coolwarm,
                        linewidth=0, antialiased=False)
 	ax.set_title("3D Plot after t = {}s: ".format(simulation_time))
-	plt.savefig(saved_plots_dir + "diffusiont_{}.png".format(simulation_time))
+	# plt.savefig(saved_plots_dir + "diffusiont_{}.png".format(simulation_time))
 
 	plt.draw()
-	plt.pause(1)
-	surf.remove()
+	plt.pause(0.5)
+		# surf.remove()
 
 	return u_values
 
 
 N = 101
 A = 2
-dt = 0.001
+dt = 0.01
 dx = 20/(N-1)
 dy = 20/(N-1)
 gamma = 0.1
 
-time_values = [0,2.5,5,7.5,10,12.5,15,17.5,20,22.5,25]
+time_values = [10,20,30,40]
 initial_u_values = initialize_grid(N,A)
 initial_u_values = add_ghost_cells(initial_u_values, N)
 
@@ -119,7 +120,7 @@ for time in time_values:
 	plt.ylabel("U")
 	plt.title("Diagonal Plot t = {}s".format(time))
 	plt.axis([0,20,0,2])
-	plt.savefig(saved_plots_dir+"diagonal_{}_t_{}.png".format("FTBS", time))
+	plt.savefig(saved_plots_dir+"diagonal_t_{}.png".format(time))
 	plt.close()
 
 print("Diagonal Plots have been saved!")

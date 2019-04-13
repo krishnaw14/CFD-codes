@@ -94,19 +94,9 @@ def solve_lax_friedrichs(u_values, N, dt, dx, dy, simulation_time):
 
 	print(np.max(u_values), np.unravel_index(u_values.argmax(), u_values.shape))
 
-			# u_values = np.array(new_u_values)
-
-		# print(iteration)
-		# print(np.max(u_values), np.unravel_index(u_values.argmax(), u_values.shape))
-
 	plt.draw()
 	plt.show()
 	surf.remove()
-
-# def solve_upwind():
-
-# def solve_ftcs_2
-
 
 N = 101
 A = 2
