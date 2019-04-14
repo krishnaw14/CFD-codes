@@ -119,7 +119,7 @@ dy = 15/(N-1)
 nu_values = [0,0.02,0.04]
 
 
-time_values = [0,5,15,25]
+time_values = [0,5,15,20,25]
 initial_u_values = initialize_grid(N,A)
 initial_u_values = add_ghost_cells(initial_u_values, N)
 saved_plots_dir = "burger_plots/"
@@ -136,7 +136,7 @@ for time in time_values:
 		plt.plot(np.linspace(0,15,N), u_values.diagonal()[1:-1])
 		plt.xlabel("x")
 		plt.ylabel("U")
-		plt.title("Diagonal Plot t = {}s".format(time))
+		plt.title("Main Diagonal Plot t = {}s. Scheme: {}, ν: {}".format(time, "FTBS", nu))
 		plt.savefig(saved_plots_dir+"burger_diagonal_{}_t_{}_nu_{}.png".format("FTBS", time, nu))
 		plt.close()
 
@@ -144,7 +144,7 @@ for time in time_values:
 		plt.plot(np.linspace(0,15,N), np.diag(np.fliplr(u_values))[1:-1])
 		plt.xlabel("x")
 		plt.ylabel("U")
-		plt.title("Diagonal Plot t = {}s".format(time))
+		plt.title("Opposite Diagonal Plot t = {}s. Scheme: {}, ν: {}".format(time, "FTBS", nu))
 		plt.savefig(saved_plots_dir+"burger_other_diagonal_{}_t_{}_nu_{}.png".format("FTBS", time, nu))
 		plt.close()
 
@@ -160,7 +160,7 @@ for time in time_values:
 		plt.plot(np.linspace(0,15,N), u_values.diagonal()[1:-1])
 		plt.xlabel("x")
 		plt.ylabel("U")
-		plt.title("Diagonal Plot t = {}s".format(time))
+		plt.title("Main Diagonal Plot t = {}s. Scheme: {}, ν: {}".format(time, "Lax-Friedrich", nu))
 		plt.savefig(saved_plots_dir+"burger_diagonal_{}_t_{}_nu_{}.png".format("Lax-Friedrich", time, nu))
 		plt.close()
 
@@ -168,7 +168,7 @@ for time in time_values:
 		plt.plot(np.linspace(0,15,N), np.diag(np.fliplr(u_values))[1:-1])
 		plt.xlabel("x")
 		plt.ylabel("U")
-		plt.title("Diagonal Plot t = {}s".format(time))
+		plt.title("Other Diagonal Plot t = {}s. Scheme: {}, ν: {}".format(time, "Lax-Friedrich", nu))
 		plt.savefig(saved_plots_dir+"burger_other_diagonal_{}_t_{}_nu_{}.png".format("Lax-Friedrich", time, nu))
 		plt.close()
 
@@ -184,7 +184,7 @@ for time in time_values:
 		plt.plot(np.linspace(0,15,N), u_values.diagonal()[1:-1])
 		plt.xlabel("x")
 		plt.ylabel("U")
-		plt.title("Diagonal Plot t = {}s".format(time))
+		plt.title("Main Diagonal Plot t = {}s. Scheme: {}, ν: {}".format(time, "FTCS2", nu))
 		plt.savefig(saved_plots_dir+"burger_diagonal_{}_t_{}_nu_{}.png".format("FTCS2", time, nu))
 		plt.close()
 
@@ -192,7 +192,7 @@ for time in time_values:
 		plt.plot(np.linspace(0,15,N), np.diag(np.fliplr(u_values))[1:-1])
 		plt.xlabel("x")
 		plt.ylabel("U")
-		plt.title("Diagonal Plot t = {}s".format(time))
+		plt.title("Other Diagonal Plot t = {}s. Scheme: {}, ν: {}".format(time, "FTCS2", nu))
 		plt.savefig(saved_plots_dir+"burger_other_diagonal_{}_t_{}_nu_{}.png".format("FTCS2", time, nu))
 		plt.close()
 
