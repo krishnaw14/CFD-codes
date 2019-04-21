@@ -105,6 +105,8 @@ def solve_iteration(x_values, density_values, momentum_values, energy_values, N,
 	plt.pause(1)
 	plt.close()
 
+	print("Peak Density:", np.max(density_values))
+
 	plt.plot(x_values, velocity_values[1:-1])
 	plt.title("Test Case 2 - {}: Velocity Variation (N = {})".format(scheme_name, N-1))
 	plt.xlabel("x")
@@ -112,6 +114,8 @@ def solve_iteration(x_values, density_values, momentum_values, energy_values, N,
 	plt.savefig("{}velocity_N{}_{}.png".format(saved_graphs_directory, N-1, scheme_name))
 	plt.pause(1)
 	plt.close()
+
+	print("Peak Velocity:", np.max(velocity_values))
 
 	plt.plot(x_values, pressure_values[1:-1])
 	plt.title("Test Case 2 - {}: Pressure Variation (N = {})".format(scheme_name, N-1))
@@ -121,6 +125,8 @@ def solve_iteration(x_values, density_values, momentum_values, energy_values, N,
 	plt.pause(1)
 	plt.close()
 
+	print("Peak Pressure:", np.max(pressure_values))
+
 	plt.plot(x_values, internal_energy[1:-1])
 	plt.title("Test Case 2 - {}: Internal Energy Variation (N = {})".format(scheme_name, N-1))
 	plt.xlabel("x")
@@ -128,6 +134,8 @@ def solve_iteration(x_values, density_values, momentum_values, energy_values, N,
 	plt.savefig("{}internal_energy_N{}_{}.png".format(saved_graphs_directory, N-1, scheme_name))
 	plt.pause(1)
 	plt.close()
+
+	print("Peak Internal Energy:", np.max(internal_energy))
 
 N_values = [101, 201, 401, 801]
 cfl = 0.3

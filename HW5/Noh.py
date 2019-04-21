@@ -47,7 +47,7 @@ def solve_iteration(x_values, density_values, momentum_values, energy_values, N,
 		velocity_values = np.array(momentum_values/density_values)
 		pressure_values = (gamma-1)*(energy_values - 0.5*momentum_values*momentum_values/density_values)
 
-		if scheme_name == "Rusonov":	
+		if scheme_name == "Rusanov":	
 			Lambda_R = np.maximum( np.abs(velocity_values[1:N+1])+1, np.abs(velocity_values[2:N+2])+1 ) 
 			Lambda_L = np.maximum( np.abs(velocity_values[1:N+1])+1, np.abs(velocity_values[0:N])+1 ) 
 		elif scheme_name == "LF":
